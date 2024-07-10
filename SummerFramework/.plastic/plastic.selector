@@ -1,4 +1,0 @@
-repository "SummerFramework@whisper3zzz@cloud.cn"
-  path "/"
-    br "/main"
-    co "/main"
