@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using Utility.SingletonPatternSystem;
 using UnityEngine;
 using Utility.LogSystem;
@@ -9,12 +10,14 @@ namespace Utility.ObjectPoolSystem
     public class PoolManager : MonoSingleton<PoolManager>
     {
         public bool logStatus;
-        public Transform root;
+        [LabelText("池对象的父GameObject")] public Transform root;
 
         private Dictionary<GameObject, ObjectPool<GameObject>> _prefabLookup;
         private Dictionary<GameObject, ObjectPool<GameObject>> _instanceLookup;
 
         private bool _dirty = false;
+
+        #region 生命周期
 
         protected override void Awake()
         {
@@ -24,16 +27,20 @@ namespace Utility.ObjectPoolSystem
             _instanceLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
         }
 
-        void Update()
+        private void Update()
         {
-            if (logStatus && _dirty)
-            {
-                PrintStatus();
-                _dirty = false;
-            }
+            if (!logStatus || !_dirty) return;
+            PrintStatus();
+            _dirty = false;
         }
 
-        public void warmPool(GameObject prefab, int size, Transform parent = null)
+        #endregion
+
+        #region Function
+
+        #region 内部方法
+
+        private void WarmPool_(GameObject prefab, int size, Transform parent = null)
         {
             if (_prefabLookup.ContainsKey(prefab))
             {
@@ -48,12 +55,9 @@ namespace Utility.ObjectPoolSystem
             _dirty = true;
         }
 
-        public GameObject spawnObject(GameObject prefab)
-        {
-            return spawnObject(prefab, Vector3.zero, Quaternion.identity);
-        }
 
-        public GameObject spawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
+        private GameObject SpawnObject_(GameObject prefab, Vector3 position = new Vector3(),
+            Quaternion rotation = new Quaternion())
         {
             if (!prefab)
                 return null;
@@ -78,7 +82,7 @@ namespace Utility.ObjectPoolSystem
             return clone;
         }
 
-        public void releaseObject(GameObject clone)
+        private void ReleaseObject_(GameObject clone)
         {
             if (!clone)
                 return;
@@ -93,7 +97,7 @@ namespace Utility.ObjectPoolSystem
             }
             else
             {
-                LogSystem.LogSystem.Instance.Log($"\"No pool contains the object: {clone.name}", LogLevelEnum.Debug);
+                LogSystem.LogSystem.Instance.Log($"No pool contains the object: {clone.name}", LogLevelEnum.Debug);
             }
         }
 
@@ -105,7 +109,7 @@ namespace Utility.ObjectPoolSystem
             return go;
         }
 
-        public void PrintStatus()
+        private void PrintStatus()
         {
             foreach (KeyValuePair<GameObject, ObjectPool<GameObject>> keyVal in _prefabLookup)
             {
@@ -117,42 +121,46 @@ namespace Utility.ObjectPoolSystem
             }
         }
 
+        #endregion
+
         #region 静态方法
 
         /// <summary>
-        /// Pre-construct a pool
+        /// 预热池
         /// </summary>
         /// <param name="prefab"></param>
         /// <param name="size"></param>
         /// <param name="parent"></param>
-        public static void WarmPool(GameObject prefab, int size, Transform parent = null)
+        private static void WarmPool(GameObject prefab, int size, Transform parent = null)
         {
-            Instance.warmPool(prefab, size, parent);
+            Instance.WarmPool_(prefab, size, parent);
         }
 
         /// <summary>
-        /// Instantiate a prefab from the pool
+        /// 从池中实例化一个对象
         /// </summary>
         /// <param name="prefab"></param>
         /// <returns></returns>
         public static GameObject SpawnObject(GameObject prefab)
         {
-            return Instance.spawnObject(prefab);
+            return Instance.SpawnObject_(prefab);
         }
 
         public static GameObject SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
         {
-            return Instance.spawnObject(prefab, position, rotation);
+            return Instance.SpawnObject_(prefab, position, rotation);
         }
 
         /// <summary>
-        /// Release a instantiated clone from the pool
+        /// 释放一个对象
         /// </summary>
         /// <param name="clone"></param>
         public static void ReleaseObject(GameObject clone)
         {
-            Instance.releaseObject(clone);
+            Instance.ReleaseObject_(clone);
         }
+
+        #endregion
 
         #endregion
     }
