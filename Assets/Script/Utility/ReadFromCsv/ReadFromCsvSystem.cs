@@ -2,7 +2,6 @@ using System.IO;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Utility.LogSystem.ReadFromCsv
 {

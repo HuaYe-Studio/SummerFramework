@@ -3,10 +3,11 @@ using System.IO;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Utility.LogSystem;
+using Utility.SingletonPatternSystem;
 
 namespace Utility.SaveSystem
 {
-    public static class SaveSystem
+    public class SaveSystem : LazySingleton<SaveSystem>
     {
         #region 同步版本
 
