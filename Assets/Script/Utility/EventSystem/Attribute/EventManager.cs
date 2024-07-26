@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Script.Utility.Extend.DelegateTool;
+using Utility.Extend.DelegateTool;
 using Utility.SingletonPatternSystem;
 
 namespace Utility.EventSystem.Attribute

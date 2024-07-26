@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Script.Utility.Extend.DelegateTool
+namespace Utility.Extend.DelegateTool
 {
     public static class DelegateTool
     {
