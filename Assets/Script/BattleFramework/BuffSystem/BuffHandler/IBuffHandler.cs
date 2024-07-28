@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-namespace BattleFramework.BuffSystem
+namespace BattleFramework.BuffSystem.BuffHandler
 {
     public interface IBuffHandler
     {

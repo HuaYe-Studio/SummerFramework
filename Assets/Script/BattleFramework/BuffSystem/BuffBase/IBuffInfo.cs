@@ -1,3 +1,4 @@
+using BattleFramework.BuffSystem.BuffHandler;
 using UnityEngine;
 
 namespace BattleFramework.BuffSystem.BuffBase

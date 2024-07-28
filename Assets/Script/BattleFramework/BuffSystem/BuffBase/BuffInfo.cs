@@ -1,4 +1,5 @@
 using System;
+using BattleFramework.BuffSystem.BuffHandler;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -10,10 +11,10 @@ namespace BattleFramework.BuffSystem.BuffBase
     {
         #region Func
 
-        public BuffInfo CreateBuffInfo(string name, int id)
+        public static BuffInfo CreateBuffInfo(string thisName, int thisId)
         {
-            var buffInfo = (BuffInfo)CreateInstance(name);
-            buffInfo.id = id;
+            var buffInfo = (BuffInfo)CreateInstance(thisName);
+            buffInfo.id = thisId;
             return buffInfo;
         }
 
@@ -31,8 +32,8 @@ namespace BattleFramework.BuffSystem.BuffBase
 
         [LabelText("Buff名")] [SerializeField] private string buffName;
         [HideInInspector] [SerializeField] private int id;
-
-        public BuffHandler Target { get; private set; }
+        [LabelText("Buff描述")] [SerializeField] private string description;
+        public BuffHandler.BuffHandler Target { get; private set; }
         public GameObject Caster { get; private set; }
         public int Layer { get; private set; }
 
@@ -46,7 +47,7 @@ namespace BattleFramework.BuffSystem.BuffBase
         private bool removeOneLayerOnTimeUp;
 
 
-        [LabelText("Tag")] [SerializeField] private BuffTag buffTag;
+        [LabelText("Tag")] [SerializeField] private BuffTag.BuffTag buffTag;
 
         #region Buff时间相关
 
@@ -72,10 +73,10 @@ namespace BattleFramework.BuffSystem.BuffBase
         #region Public
 
         public string BuffName => buffName;
-
+        public string Description => description;
         public int ID => id;
         public Sprite Icon => icon;
-        public BuffTag BuffTag => buffTag;
+        public BuffTag.BuffTag BuffTag => buffTag;
         public BuffMultipleAddType MultipleAddType => multipleAddType;
         public bool RemoveOneLayerOnTimeUp => removeOneLayerOnTimeUp;
         public bool IsEnable => _isEnable;
@@ -180,7 +181,7 @@ namespace BattleFramework.BuffSystem.BuffBase
 
         public void Init(IBuffHandler target, GameObject caster)
         {
-            Target = (BuffHandler)target;
+            Target = (BuffHandler.BuffHandler)target;
             Caster = caster;
         }
 

@@ -62,17 +62,17 @@ namespace Sirenix.OdinInspector.Demos
         }
 
         //// The editor window itself can also be customized.
-        //protected override void OnEnable()
-        //{
-        //    base.OnEnable();
-
-        //    this.MenuWidth = 200;
-        //    this.ResizableMenuWidth = true;
-        //    this.WindowPadding = new Vector4(10, 10, 10, 10);
-        //    this.DrawUnityEditorPreview = true;
-        //    this.DefaultEditorPreviewHeight = 20;
-        //    this.UseScrollView = true;
-        //}
+        // protected override void OnEnable()
+        // {
+        //     base.OnEnable();
+        //
+        //     this.MenuWidth = 200;
+        //     this.ResizableMenuWidth = true;
+        //     this.WindowPadding = new Vector4(10, 10, 10, 10);
+        //     this.DrawUnityEditorPreview = true;
+        //     this.DefaultEditorPreviewHeight = 20;
+        //     this.UseScrollView = true;
+        // }
 
         private class MyCustomMenuItem : OdinMenuItem
         {

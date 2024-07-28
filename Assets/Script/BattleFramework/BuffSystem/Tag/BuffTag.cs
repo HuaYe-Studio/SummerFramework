@@ -1,6 +1,6 @@
 using System;
 
-namespace BattleFramework.BuffSystem.BuffBase
+namespace BattleFramework.BuffSystem.BuffTag
 {
     [Flags]
     public enum BuffTag : int
