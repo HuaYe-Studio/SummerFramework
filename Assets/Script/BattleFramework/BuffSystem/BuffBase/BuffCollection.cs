@@ -9,7 +9,7 @@ namespace BattleFramework.BuffSystem.BuffBase
     [Serializable]
     public class BuffCollection : ScriptableObject
     {
-        [SerializeField] private int size = 20;
+        [SerializeField] private int size = 50;
 
         [SerializeField] [ShowInInspector] public List<BuffInfo> buffList = new(20);
         public int Size => size;

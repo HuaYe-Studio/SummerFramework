@@ -2,6 +2,8 @@ using System;
 using BattleFramework.BuffSystem.BuffHandler;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using BattleFramework.BuffSystem;
+using BattleFramework.BuffSystem.Editor.ExtendAttribute;
 
 namespace BattleFramework.BuffSystem.BuffBase
 {
@@ -27,34 +29,44 @@ namespace BattleFramework.BuffSystem.BuffBase
 
         #region 基本信息
 
-        [BoxGroup("基本信息")] [LabelText("图标")] [SerializeField]
+        [BoxGroup("基本信息")] [LabelTextInEditor("图标")] [LabelText("图标")] [SerializeField]
         private Sprite icon;
 
-        [LabelText("Buff名")] [SerializeField] private string buffName;
-        [HideInInspector] [SerializeField] private int id;
-        [LabelText("Buff描述")] [SerializeField] private string description;
+        [LabelTextInEditor("Buff名")] [LabelText("Buff名")] [SerializeField]
+        private string buffName;
+
+        [LabelTextInEditor("Buff的ID")] [LabelText("Buff的ID")] [SerializeField]
+        private int id;
+
+        [LabelTextInEditor("Buff描述")] [LabelText("Buff描述")] [SerializeField]
+        private string description;
+
         public BuffHandler.BuffHandler Target { get; private set; }
         public GameObject Caster { get; private set; }
         public int Layer { get; private set; }
 
 
-        [BoxGroup("逻辑相关")] [EnumPaging] [LabelText("重复添加方式")] [SerializeField]
+        [BoxGroup("逻辑相关")] [EnumPaging] [LabelTextInEditor("重复添加方式")] [LabelText("重复添加方式")] [SerializeField]
         private BuffMultipleAddType multipleAddType;
 
         private bool _isEnable;
 
-        [LabelText("倒计时结束时层数-1")] [SerializeField]
+        [LabelTextInEditor("倒计时结束时层数-1")] [LabelText("倒计时结束时层数-1")] [SerializeField]
         private bool removeOneLayerOnTimeUp;
 
 
-        [LabelText("Tag")] [SerializeField] private BuffTag.BuffTag buffTag;
+        [LabelTextInEditor("Buff的Tag")] [LabelText("Buff的Tag")] [SerializeField]
+        private BuffTag.BuffTag buffTag;
 
         #region Buff时间相关
 
         [BoxGroup("Buff时间相关")] private float _timer;
-        [LabelText("是否永久")] [SerializeField] private bool isPermanent;
 
-        [LabelText("持续时间")] [SerializeField] private float duration;
+        [LabelTextInEditor("是否永久")] [LabelText("是否永久")] [SerializeField]
+        private bool isPermanent;
+
+        [LabelTextInEditor("持续时间")] [LabelText("持续时间")] [SerializeField]
+        private float duration;
 
         //周期定时效果
         private float _tickTimer;
@@ -74,7 +86,10 @@ namespace BattleFramework.BuffSystem.BuffBase
 
         public string BuffName => buffName;
         public string Description => description;
+
         public int ID => id;
+
+
         public Sprite Icon => icon;
         public BuffTag.BuffTag BuffTag => buffTag;
         public BuffMultipleAddType MultipleAddType => multipleAddType;

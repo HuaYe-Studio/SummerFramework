@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a67278a2c54b52b829cba8ddc12ef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buffCollection: {fileID: 0}
+  _buffCollection: {fileID: 11400000, guid: cb118ea69b1c9aa4a9fc7a2618c9a215, type: 2}
 --- !u!114 &7569569956386398218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,4 +58,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a431a37063b4ed1a06bb8da5313cc33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagData: {fileID: 0}
+  tagData: {fileID: 11400000, guid: 5190165ea90b294418f1ddf967476046, type: 2}
