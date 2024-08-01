@@ -1,9 +1,10 @@
 using BattleFramework.BuffSystem.Manager;
 using UnityEngine;
+using Utility.SingletonPatternSystem;
 
 namespace BattleFramework.BuffSystem.BuffTag
 {
-    public abstract class BuffTagManager : MonoBehaviour, IBuffTagManager
+    public abstract class BuffTagManager : MonoSingleton<BuffTagManager>, IBuffTagManager
     {
         public abstract bool RemoveOtherBuffWhenTagAdd(BuffTag btag, BuffTag other);
 

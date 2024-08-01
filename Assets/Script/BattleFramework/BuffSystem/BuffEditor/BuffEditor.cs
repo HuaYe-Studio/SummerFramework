@@ -11,6 +11,7 @@ using System.IO;
 using BattleFramework.BuffSystem.BuffBase;
 using BattleFramework.BuffSystem.BuffTag;
 using BattleFramework.BuffSystem.Manager;
+using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
 namespace BattleFramework.BuffSystem.Editor
@@ -29,7 +30,9 @@ namespace BattleFramework.BuffSystem.Editor
         private static readonly string DefaultTagSoName = "BuffTagData.asset";
 
         private GameObject _buffManager;
-        private BitBuffTagData _bitBuffTagData;
+       private BitBuffTagData _bitBuffTagData;
+
+      
 
         private static string BuffsPath => ScriptObjectPath + "/Buffs";
 
@@ -38,9 +41,9 @@ namespace BattleFramework.BuffSystem.Editor
         private Assembly _assembly;
 
         //子类选项
-        private int _selectedSubclassIndex = 0;
-        private int _lastSelectSubclassIndex = 0;
-        private bool _changedSubClassSelection = false;
+        private int _selectedSubclassIndex;
+        private int _lastSelectSubclassIndex;
+        private bool _changedSubClassSelection;
         private const string PlaceholderBuffName = "PlaceholderBuff";
         private const string NoneType = "[NONE]";
 
@@ -68,11 +71,10 @@ namespace BattleFramework.BuffSystem.Editor
         private Vector2 _leftScrollPos;
         private int _maxLengthBuffer;
         private int _selectedBuffIndex = -1;
-        private bool _applyToAll = false;
+        private bool _applyToAll;
 
         //buff id 前缀
         private int _buffIdPrefix;
-        
 
         #endregion
 
@@ -81,7 +83,7 @@ namespace BattleFramework.BuffSystem.Editor
             float leftWidth = position.width * WidthDivision;
             if (leftWidth >= 224.0f)
             {
-                leftWidth=position.width * WidthDivision;
+                leftWidth = position.width * WidthDivision;
             }
             else
             {
@@ -198,9 +200,16 @@ namespace BattleFramework.BuffSystem.Editor
             {
                 //修改Buff类型
                 //创建Buff asset资源的唯一位置
-                _buffCollectionSo.buffList[_selectedBuffIndex] = BuffInfo.CreateBuffInfo(
-                    _selectedSubclassIndex == 0 ? PlaceholderBuffName : _subclassNames[_selectedSubclassIndex],
-                    _selectedBuffIndex);
+                if (!_applyToAll)
+                    _buffCollectionSo.buffList[_selectedBuffIndex] = BuffInfo.CreateBuffInfo(
+                        _selectedSubclassIndex == 0 ? PlaceholderBuffName : _subclassNames[_selectedSubclassIndex],
+                        _selectedBuffIndex);
+                else if (_applyToAll || _buffIdPrefix == 0)
+                {
+                    _buffCollectionSo.buffList[_selectedBuffIndex] = BuffInfo.CreateBuffInfo(
+                        _selectedSubclassIndex == 0 ? PlaceholderBuffName : _subclassNames[_selectedSubclassIndex],
+                        int.Parse($"{_buffIdPrefix}" + $"{_selectedBuffIndex}"));
+                }
 
                 CreateBuffAsset(_selectedBuffIndex);
                 _currentBuffSo = new SerializedObject(_buffCollectionSo.buffList[_selectedBuffIndex]);
@@ -219,7 +228,7 @@ namespace BattleFramework.BuffSystem.Editor
                 {
                     if (_currentBuffProp.name.Equals("buffTag"))
                     {
-                        _currentBuffProp.enumValueFlag = (int)(BuffTag.BuffTag)EditorGUILayout.EnumPopup(
+                        _currentBuffProp.enumValueFlag = (int)(BuffTag.BuffTag)EditorGUILayout.EnumFlagsField(
                             new GUIContent("Buff的Tag"),
                             (BuffTag.BuffTag)_currentBuffProp.enumValueFlag);
                     }
@@ -252,7 +261,7 @@ namespace BattleFramework.BuffSystem.Editor
             if (GUILayout.Button("刷新Buff", GUILayout.Width(60f))) Initialize();
             GUILayout.Space(50f);
             GUILayout.Label("BuffID前缀", GUILayout.Width(80f));
-            EditorGUILayout.IntField(0, GUILayout.Width(50f));
+            _buffIdPrefix = EditorGUILayout.IntField(_buffIdPrefix, GUILayout.Width(50f));
             GUILayout.Label("应用到所有", EditorStyles.boldLabel, GUILayout.Width(80f));
 
             _applyToAll = EditorGUILayout.Toggle(_applyToAll, GUILayout.Width(20f));
@@ -263,7 +272,7 @@ namespace BattleFramework.BuffSystem.Editor
             GUILayout.EndArea();
         }
 
-        private static string ScriptObjectPath
+        public static string ScriptObjectPath
         {
             get
             {
@@ -285,7 +294,6 @@ namespace BattleFramework.BuffSystem.Editor
 
         private void Init()
         {
-            //Debug.Log(ScriptObjectPath);
             _assembly = AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name.Equals(AssemblyName));
             UpdateSubClass();
             UpdateBuffList();
@@ -327,7 +335,7 @@ namespace BattleFramework.BuffSystem.Editor
         private void UpdateBuffList()
         {
             string[] assetPaths = AssetDatabase.FindAssets
-                ("t:BuffCollection", new string[] { ScriptObjectPath });
+                ("t:BuffCollection", new[] { ScriptObjectPath });
             // Debug.Log(assetPaths.Length);
             // Debug.Log(assetPaths[0]);
             if (assetPaths.Length <= 0)
@@ -359,6 +367,7 @@ namespace BattleFramework.BuffSystem.Editor
         private void CreateBuffAsset(int index)
         {
             var fileName = "Buff" + $"{index:000}" + ".asset";
+
             var directory = Path.Combine(BuffsPath, fileName);
             if (File.Exists(directory)) File.Delete(directory);
             var buff = _buffCollectionSo.buffList[index];
@@ -367,7 +376,7 @@ namespace BattleFramework.BuffSystem.Editor
 
         private void CreatBuffTagAsset()
         {
-            var directory = Path.Combine(ScriptObjectPath, DefaultTagSoName);
+            var directory = Path.Combine(ScriptObjectPath.Replace("BuffData", "TagData"), DefaultTagSoName);
             if (File.Exists(directory))
             {
                 _bitBuffTagData = AssetDatabase.LoadAssetAtPath<BitBuffTagData>(directory);

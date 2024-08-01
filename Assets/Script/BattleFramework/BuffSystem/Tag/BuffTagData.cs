@@ -1,8 +1,8 @@
-using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace BattleFramework.BuffSystem.BuffTag
 {
-    public class BuffTagData : ScriptableObject
+    public class BuffTagData :  SerializedScriptableObject
     {
     }
 }

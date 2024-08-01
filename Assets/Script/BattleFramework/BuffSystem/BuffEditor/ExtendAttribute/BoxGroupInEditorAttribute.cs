@@ -1,11 +1,18 @@
+using System;
 using System.Diagnostics;
-using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace BattleFramework.BuffSystem.Editor.ExtendAttribute
 {
     [Conditional("UNITY_EDITOR")]
-    public class BoxGroupInEditorAttribute : BoxGroupAttribute
+    [AttributeUsage(AttributeTargets.All)]
+    public class BoxGroupInEditorAttribute : PropertyAttribute
     {
-        
+        public string Title { get; }
+
+        public BoxGroupInEditorAttribute(string title)
+        {
+            Title = title;
+        }
     }
 }

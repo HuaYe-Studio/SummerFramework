@@ -60,7 +60,7 @@ namespace BattleFramework.BuffSystem.BuffBase
 
         #region Buff时间相关
 
-        [BoxGroup("Buff时间相关")] private float _timer;
+  [BoxGroupInEditor("XXXX")]      [BoxGroup("Buff时间相关")] private float _timer;
 
         [LabelTextInEditor("是否永久")] [LabelText("是否永久")] [SerializeField]
         private bool isPermanent;

@@ -6,15 +6,21 @@ namespace BattleFramework.BuffSystem.BuffTag
 {
     public class BitBuffTagManager : BuffTagManager
     {
-        [HideInInspector, SerializeField] private BitBuffTagData tagData;
+        [HideInInspector, SerializeField] public BitBuffTagData tagData;
+
+        public BitBuffTagData GetTagData()
+        {
+            return tagData;
+        }
 
         public void SetData(BitBuffTagData data)
         {
             tagData = data;
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             if (tagData == null)
                 LogSystem.Instance.Log("Tag数据丢失", LogLevelEnum.Error);
         }
