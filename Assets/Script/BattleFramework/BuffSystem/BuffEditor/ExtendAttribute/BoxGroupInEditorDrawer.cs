@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Reflection;
 using Sirenix.OdinInspector;
 using UnityEditor;
@@ -11,7 +12,8 @@ namespace BattleFramework.BuffSystem.Editor.ExtendAttribute
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             // 获取字段信息
-            var fields = property.serializedObject.targetObject.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+            var fields = property.serializedObject.targetObject.GetType()
+                .GetFields(BindingFlags.Public | BindingFlags.Instance);
             foreach (var field in fields)
             {
                 var attribute = field.GetCustomAttribute<BoxGroupAttribute>();
@@ -36,6 +38,7 @@ namespace BattleFramework.BuffSystem.Editor.ExtendAttribute
 
             // Draw($"{label}", property.serializedObject.targetObject);
         }
+
         public void Draw(string title, object target)
         {
             GUILayout.BeginVertical("box");
@@ -65,3 +68,4 @@ namespace BattleFramework.BuffSystem.Editor.ExtendAttribute
         }
     }
 }
+#endif

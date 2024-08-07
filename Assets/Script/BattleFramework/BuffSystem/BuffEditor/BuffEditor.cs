@@ -11,7 +11,6 @@ using System.IO;
 using BattleFramework.BuffSystem.BuffBase;
 using BattleFramework.BuffSystem.BuffTag;
 using BattleFramework.BuffSystem.Manager;
-using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
 namespace BattleFramework.BuffSystem.Editor
