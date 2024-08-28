@@ -225,23 +225,24 @@ namespace BattleFramework.BuffSystem.Editor
                 _currentBuffSo.UpdateIfRequiredOrScript();
                 while (_currentBuffProp.NextVisible(true))
                 {
-                    if (_currentBuffProp.name.Equals("buffTag"))
+                    switch (_currentBuffProp.name)
                     {
-                        _currentBuffProp.enumValueFlag = (int)(BuffTag.BuffTag)EditorGUILayout.EnumFlagsField(
-                            new GUIContent("Buff的Tag"),
-                            (BuffTag.BuffTag)_currentBuffProp.enumValueFlag);
+                        case "buffTag":
+                            _currentBuffProp.enumValueFlag = (int)(BuffTag.BuffTag)EditorGUILayout.EnumFlagsField(
+                                new GUIContent("Buff的Tag"),
+                                (BuffTag.BuffTag)_currentBuffProp.enumValueFlag);
+                            break;
+                        case "icon":
+                            _currentBuffProp.objectReferenceValue = EditorGUILayout.ObjectField("图标",
+                                (Sprite)_currentBuffProp.objectReferenceValue, typeof(Sprite), false) as Sprite;
+                            break;
+                        case "isPermanent":
+                            _currentBuffProp.NextVisible(true);
+                            break;
+                        default:
+                            EditorGUILayout.PropertyField(_currentBuffProp, true);
+                            break;
                     }
-                    else if (_currentBuffProp.name.Equals("icon"))
-                    {
-                        _currentBuffProp.objectReferenceValue = EditorGUILayout.ObjectField("图标",
-                            (Sprite)_currentBuffProp.objectReferenceValue, typeof(Sprite), false) as Sprite;
-                    }
-                    else if (_currentBuffProp.name.Equals("isPermanent"))
-                    {
-                        _currentBuffProp.NextVisible(true);
-                    }
-                    else
-                        EditorGUILayout.PropertyField(_currentBuffProp, true);
                 }
 
                 if (GUI.changed)

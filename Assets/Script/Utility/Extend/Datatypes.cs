@@ -15,7 +15,6 @@ namespace Utility.Extend.Datatypes
             {
                 return list;
             }
-          
         }
 
         [Serializable]
@@ -28,7 +27,6 @@ namespace Utility.Extend.Datatypes
             public SerializeDictionary(Dictionary<TKey, TValue> dictionary)
             {
                 Dictionary = dictionary;
-             
             }
 
             public void OnBeforeSerialize()
