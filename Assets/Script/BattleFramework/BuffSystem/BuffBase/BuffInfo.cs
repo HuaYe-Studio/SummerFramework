@@ -2,7 +2,6 @@ using System;
 using BattleFramework.BuffSystem.BuffHandler;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using BattleFramework.BuffSystem;
 using BattleFramework.BuffSystem.Editor.ExtendAttribute;
 
 namespace BattleFramework.BuffSystem.BuffBase
@@ -32,7 +31,7 @@ namespace BattleFramework.BuffSystem.BuffBase
         [BoxGroup("基本信息")] [LabelTextInEditor("图标")] [LabelText("图标")] [SerializeField]
         private Sprite icon;
 
-      [SerializeField][LabelTextInEditor("Buff名称")][LabelText("buff名称")]
+        [SerializeField] [LabelTextInEditor("Buff名称")] [LabelText("buff名称")]
         private string buffName;
 
         [LabelTextInEditor("Buff的ID")] [LabelText("Buff的ID")] [SerializeField]
@@ -60,10 +59,11 @@ namespace BattleFramework.BuffSystem.BuffBase
 
         #region Buff时间相关
 
-  [BoxGroupInEditor("XXXX")]      [BoxGroup("Buff时间相关")] private float _timer;
+        [BoxGroupInEditor("XXXX")] [BoxGroup("Buff时间相关")]
+        private float _timer;
 
         [LabelTextInEditor("是否永久")] [LabelText("是否永久")] [SerializeField]
-        public bool isPermanent=false;
+        public bool isPermanent = false;
 
         [LabelTextInEditor("持续时间")] [LabelText("持续时间")] [SerializeField]
         private float duration;

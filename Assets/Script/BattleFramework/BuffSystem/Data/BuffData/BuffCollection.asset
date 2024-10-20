@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 10
   buffList:
-  - {fileID: 11400000, guid: 2d5d1eff35b4fbe48aa5fd20200846f6, type: 2}
-  - {fileID: 11400000, guid: f1f366e1d2fadc242babfe007ff340ba, type: 2}
-  - {fileID: 11400000, guid: 4e8031d74f69f7741a239b14918eb5c4, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 6e8b19342087b6b47b081d7bf2c3219a, type: 2}
   - {fileID: 0}
   - {fileID: 0}
