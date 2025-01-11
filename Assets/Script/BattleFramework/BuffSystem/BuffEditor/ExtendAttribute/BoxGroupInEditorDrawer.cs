@@ -36,7 +36,7 @@ namespace BattleFramework.BuffSystem.Editor.ExtendAttribute
                 }
             }
 
-            // Draw($"{label}", property.serializedObject.targetObject);
+            Draw($"{label}", property.serializedObject.targetObject);
         }
 
         public void Draw(string title, object target)

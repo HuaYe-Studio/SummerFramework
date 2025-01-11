@@ -6,7 +6,7 @@ using UnityEngine;
 namespace BattleFramework.BuffSystem.Editor
 {
     [CustomEditor(typeof(BitBuffTagData))]
-    public class BitBuffTagEditor :UnityEditor.Editor
+    public class BitBuffTagEditor : UnityEditor.Editor
     {
         int _length;
         SerializedProperty _removedTagsData;
