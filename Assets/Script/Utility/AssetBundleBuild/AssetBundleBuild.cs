@@ -1,8 +1,8 @@
 #if UNITY_EDITOR
-using UnityEditor;
 using System.IO;
+using UnityEditor;
 
-namespace Utility.AssetBundleBuild
+namespace Script.Utility.AssetBundleBuild
 {
     public class AssetBundleBuild : Editor
     {
@@ -15,8 +15,7 @@ namespace Utility.AssetBundleBuild
             BuildAssetBundles(AssetBundleOutputPath);
         }
 
-        private static void BuildAssetBundles(string assetBundleOutPath,
-            BuildTarget buildTarget = BuildTarget.StandaloneWindows)
+        private static void BuildAssetBundles(string assetBundleOutPath, BuildTarget buildTarget = BuildTarget.StandaloneWindows)
         {
             var path = assetBundleOutPath + $"/{buildTarget.ToString()}";
             if (Directory.Exists(path))
