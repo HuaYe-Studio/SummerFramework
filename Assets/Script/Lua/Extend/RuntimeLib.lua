@@ -138,4 +138,30 @@ function runtimeLib.class(className, superClass)
     setmetatable(klass, _class_metatable);
     return klass;
 end;
- 
+
+---获取父类
+function runtimeLib.super(klass)
+    return klass._super;
+end;
+
+---判断一个对象时不时某一个类的实例
+---@param object any 对象
+---@param klass table 类
+---@return boolean 
+function runtimeLib.isInstance(object, klass)
+    if not object
+    then
+        return false;
+    end ;
+    local class = object._class;
+    while class do
+        if klass ~= class then
+            class = class._super;
+        else
+            return true;
+        end
+    end
+    return false;
+end;
+
+return runtimeLib;
