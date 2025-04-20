@@ -42,7 +42,7 @@ namespace Utility.LogSystem
         {
             base.Awake();
             DontDestroyOnLoad(gameObject);
-            //   _screenConsole = GetComponent<ScreenConsole>();
+            _screenConsole = GetComponent<ScreenConsole>();
         }
 
         #endregion
@@ -58,6 +58,10 @@ namespace Utility.LogSystem
                 logTag = logTag
             };
             Log(logMessage);
+            if (outputOnFile)
+            {
+                LogToFile(message);
+            }
         }
 
         private void Log(LogMessage logMessage)
@@ -86,6 +90,21 @@ namespace Utility.LogSystem
                 LogLevelEnum.Error => Color.red,
                 _ => Color.white
             };
+        }
+
+        void LogToFile(string logMessage)
+        {
+            string fileName = $"{Application.platform}_Log.txt";
+            string filePath = $"{Application.persistentDataPath}/{fileName}";
+
+            try
+            {
+                System.IO.File.AppendAllText(filePath, $"{DateTime.Now}: {logMessage}\n");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Failed to write log to file: {ex.Message}");
+            }
         }
 
         #endregion
